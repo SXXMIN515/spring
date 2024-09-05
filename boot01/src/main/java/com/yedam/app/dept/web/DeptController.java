@@ -28,8 +28,15 @@ public class DeptController {
 		return "dept/list";
 		// classpath:/templates/dept/list.html
 	}
-	//단건조회
-	
+	//단건조회 : Get => QueryString(커맨드 객체 or @RequestParam, departmentId 
+	@GetMapping("deptInfo") //deptInfo?key=value
+	public String deptInfo(DeptVO deptVO, Model model) {
+		DeptVO findVO = deptService.deptInfo(deptVO);
+		model.addAttribute("dept", findVO);
+		// HttpServletRequest.setAttribute();
+		return "dept/info";
+		// classpath:/templates/dept/info.html => 실제 경로
+	}
 	//등록 - 페이지
 	
 	//등록 - 처리
