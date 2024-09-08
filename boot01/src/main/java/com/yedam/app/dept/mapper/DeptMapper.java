@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yedam.app.dept.service.DeptVO;
-import com.yedam.app.emp.service.EmpVO;
 
 public interface DeptMapper {
 	//전체조회

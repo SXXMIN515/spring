@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/default_layout2}"
+      layout:fragment="Content2">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<th:block th:replace="~{common/configs/default_config2 :: jQueryConfig2}"></th:block>
+</head>
+<body>
+	<form name="updateForm" th:object="${dept}">
+		<h3>부서 정보 수정</h3>
+		<div>
+			<label for="did">부서번호</label>
+			<input type="number" id="did" th:field="*{departmentId}" readonly>
+		</div>
+		<div>
+			<label for="dname">부서명</label>
+			<input type="text" id="dname" name="departmentName" th:value="${dept.departmentName}">
+		</div>
+		<div>
+			<button type="button" id="updateBtn">저장</button>
+		</div>
+	</form>
+	<script>
+	$('#updateBtn').on('click', updateAjax);
+	
+	function updateAjax(event) {
+		// 1) 보낼 데이터 가져오기
+		let dataObj = getFormData();
+		// 2) AJAX
+		$.ajax("deptUpdate", {
+			type : 'post', //method
+			//data : dataObj // 객체 => QueryString
+			
+			//JSON : @RequestBody
+			contentType : 'application/json',
+			data:JSON.stringify(dataObj)
+		})
+		.done((data)=>{
+			if(data.result) {
+				alert('성공적으로 수정되었습니다.')
+			}else{
+				alert('수정되지 않았습니다.')
+			}
+		})
+		.fail((err)=>console.log(err));
+	}
+	
+	function getFormData() {
+		let formAry = $('form[name="updateForm"]').serializeArray();
+		/*
+		[	{ name : "departmentId", value : "800"},
+			{ name : "departmentName", value : "OO"},
+			 ... ]
+		*/
+		
+		let formObj = {};
+		$.each(formAry, function(idx, tag){
+			// tag) { name : "departmentId", value : "800"}
+			formObj[tag.name] = tag.value;
+			// formObj["departmentId"] = "800";
+		});
+		
+		return formObj; /* { "departmentId" : 800, "departmentName" : "OO", ...}*/
+	}
+	</script>
+</body>
+</html>

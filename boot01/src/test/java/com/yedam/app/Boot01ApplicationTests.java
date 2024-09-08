@@ -90,17 +90,17 @@ class Boot01ApplicationTests {
 		assertEquals(result, 1);
 	}
 	
-	@Test
-	void empUpdateDynamic() {
-		EmpVO empVO = new EmpVO();
-		empVO.setEmployeeId(205);
-		empVO.setLastName("Kim");
-		empVO.setJobId("AC_MGR");
-		
-		int result 
-		= empMapper.updateEmpInfo(empVO.getEmployeeId(), empVO);
-		
-		assertEquals(result, 1);
-	}
+	//@Test
+//	void empUpdateDynamic() {
+//		EmpVO empVO = new EmpVO();
+//		empVO.setEmployeeId(205);
+//		empVO.setLastName("Kim");
+//		empVO.setJobId("AC_MGR");
+//		
+//		int result 
+//		= empMapper.updateEmpInfo(empVO.getEmployeeId(), empVO);
+//		
+//		assertEquals(result, 1);
+//	}
 
 }

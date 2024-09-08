@@ -17,12 +17,11 @@
         	 , department_name
 		     , manager_id
 		     , location_id
-		FROM departments
+		FROM   departments
 		WHERE  department_id = #{departmentId}
-		<!-- #{} : 데이터 타입에 따른 추가작업 
-		     ${} : 데이터 타입과 무관, '' 없이 진행 -->
 	</select>
 	
+	<!-- 등록 -->
 	<insert id="insertDeptInfo" parameterType="DeptVO">
 		<selectKey keyProperty="departmentId"
 				   resultType="Integer"
@@ -33,12 +32,35 @@
 		INSERT INTO departments
 	          (	    department_id
 			      , department_name
+			      , manager_id
+			      , location_id
 			  )
 		VALUES    
 		      (
 		      		#{departmentId}
 		      		<!-- departments_seq.NEXTVAL -->
 			       ,#{departmentName}
+			       ,#{managerId}
+			      , #{locationId}
 			  )
 	</insert>
+	
+	<!-- 수정 -->
+	<update id="updateDeptInfo">
+		UPDATE departments
+		SET	  department_name = #{dept.departmentName}
+			 <!--  <if test="dept.managerId != null and !dept.managerId.equals('')">
+		    , manager_id = #{dept.managerId}
+			  </if>
+			  <if test="dept.locationId != null and !dept.locationId.equals('')">
+		    , locationId = #{dept.locationId}
+		      </if> -->
+		WHERE department_id = #{did}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteDeptInfo" parameterType="int">
+		DELETE FROM departments
+		WHERE department_id = #{id}
+	</delete>
 </mapper>
