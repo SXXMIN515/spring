@@ -54,6 +54,9 @@
 			//JSON : @RequestBody
 			contentType : 'application/json',
 			data:JSON.stringify(dataObj)
+			/* beforeSend: function (xhr) {
+				xhr.setRe
+			}  */
 		})
 		.done((data)=>{
 			if(data.result) {

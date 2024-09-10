@@ -19,26 +19,18 @@ public class SpringSecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
-	@Bean // 메모리상 인증정보 등록 => 테스트 전용
-	InMemoryUserDetailsManager imMemoryUserDetailsService() {
-		UserDetails user 
-			= User.builder()
-				.username("user1")
-				.password(passwordEncoder().encode("1234"))
-				.roles("USER") // ROLE_USER
-			  //.authorities("ROLE_USER")
-				.build();
-		
-		UserDetails admin 
-		= User.builder()
-			.username("admin1")
-			.password(passwordEncoder().encode("1234"))
-		  //.roles("ADMIN") // ROLE_ADMIN
-		    .authorities("ROLE_ADMIN")
-			.build();
-		
-		return new InMemoryUserDetailsManager(user, admin);
-	}
+	/*
+	 * @Bean // 메모리상 인증정보 등록 => 테스트 전용 InMemoryUserDetailsManager
+	 * imMemoryUserDetailsService() { UserDetails user = User.builder()
+	 * .username("user1") .password(passwordEncoder().encode("1234")) .roles("USER")
+	 * // ROLE_USER //.authorities("ROLE_USER") .build();
+	 * 
+	 * UserDetails admin = User.builder() .username("admin1")
+	 * .password(passwordEncoder().encode("1234")) //.roles("ADMIN") // ROLE_ADMIN
+	 * .authorities("ROLE_ADMIN", "ROLE_USER") .build();
+	 * 
+	 * return new InMemoryUserDetailsManager(user, admin); }
+	 */
 	
 	// 인증 및 잉가
 	@Bean
@@ -56,7 +48,10 @@ public class SpringSecurityConfig {
 			.formLogin(formlogin -> formlogin
 					.defaultSuccessUrl("/all"))
 			.logout(logout -> logout
-					.logoutSuccessUrl("/all"));
+					.logoutSuccessUrl("/all")
+					.invalidateHttpSession(true));
+		
+		http.csrf(csrf -> csrf.disable());
 		
 		return http.build();
 	}
